@@ -1,0 +1,41 @@
+{:name            "read-books"
+ :environment     #profile {:prod #or [#env APP_ENVIRONMENT "prod"]
+                            :dev  "dev"
+                            :demo "demo"
+                            :test "test"}
+ :max-header-size 10000
+ :ig/system       {:app.ig/profile          #profile {:prod :prod
+                                                      :dev  :dev
+                                                      :demo :demo
+                                                      :test :test}
+                   :app.ig/env              {:profile #ig/ref :app.ig/profile}
+                   :app.ig/pedestal         {:service    {:io.pedestal.http/type           :jetty
+                                                          :io.pedestal.http/routes         []
+                                                          :io.pedestal.http/port           #long #or [#env WEBSITES_PORT #profile {:dev 6161 :test 6162} 6160]
+                                                          :io.pedestal.http/host           #or [#env HTTP_BIND_HOST "localhost"]
+                                        ;:io.pedestal.http/resource-path "/static"
+                                                          :io.pedestal.http/join?          false
+                                                          :io.pedestal.http/secure-headers {:content-security-policy-settings {:img-src     "https://*.socozy.casa 'self' data:;"
+                                                                                                                               :object-src  "'none';"
+                                                                                                                               :default-src "'self';"
+                                                                                                                               :font-src    "'self' https://rsms.me;"
+                                                                                                                               :script-src  "'self' 'unsafe-inline' 'unsafe-eval';"
+                                                                                                                               :style-src   "'self' 'unsafe-inline' https://rsms.me;"
+                                                                                                                               :connect-src "'self'"}}}
+                                             :env        #ig/ref :app.ig/env
+                                             :profile    #ig/ref :app.ig/profile
+                                             :routes     #ig/ref :app.ig.router/routes
+                                             :handler    #ig/ref :app.ig/handler}
+                   :app.ig/handler          {:env        #ig/ref :app.ig/env}
+                   :app.ig.router/routes    {:routes     #ig/refset :app.ig/routes
+                                             :datomic    #ig/ref :app.ig/datomic-db
+                                             :env        #ig/ref :app.ig/env}
+                   :app.ig/datomic-db       {:server-type :dev-local
+                                             :system      "dev"
+                                             :db-name     "read-books"
+                                             :env         #ig/ref :app.ig/env
+                                             :storage-dir #or [#env DATOMIC_DB
+                                                               #profile {:dev  #envf ["%s/datomic.data" PWD]
+                                                                         :test #envf ["%s/datomic.test.data" PWD]
+                                                                         :demo #envf ["%s/datomic.demo.data" PWD]}]}}
+ :jobs            {}}
