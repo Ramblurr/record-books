@@ -10,9 +10,9 @@
   repl-ui {:depends [npm-install]
            :task  (shell {:dir "./"} "npx shadow-cljs -A dev watch app")}
 
-  tailwind-css (shell {:dir "./"} "npx" "tailwindcss" "-i" "resources/public/css/main.css" "-o" "resources/public/css/compiled/main.css")
-  watch-css (shell {:dir "./"} "npx" "tailwindcss" "-w" "-i" "resources/public/css/main.css" "-o" "resources/public/css/compiled/main.css")
-  prod-css (shell {:dir "./"} "npx" "tailwindcss" "-i" "resources/public/css/main.css" "-o" "resources/public/css/compiled/main.css" "--minify")
+  tailwind-css (shell {:dir "./"} "npx" "tailwindcss" "-i" "src/resources/public/css/main.css" "-o" "src/resources/public/css/compiled/main.css")
+  watch-css (shell {:dir "./"} "npx" "tailwindcss" "-w" "-i" "src/resources/public/css/main.css" "-o" "src/resources/public/css/compiled/main.css")
+  prod-css (shell {:dir "./"} "npx" "tailwindcss" "-i" "src/resources/public/css/main.css" "-o" "src/resources/public/css/compiled/main.css" "--minify")
 
   clean (shell "clojure -T:build clean")
   uberjar (shell "clojure -T:build uberjar")
