@@ -51,8 +51,6 @@
    [:script {:src "/js/htmx.js"
              :integrity "sha384-mrsv860ohrJ5KkqRxwXXj6OIT6sONUxOd+1kvbqW351hQd7JlfFnM0tLetA76GU0"}]
    [:script {:src "/js/nprogress.js"}]
-   [:script {:src "/js/popperjs@2-dev.js"}]
-   [:script {:src "/js/tippy@6-dev.js"}]
    [:script {:src "/js/recorder.min.js"}]
    [:script {:src "https://documentservices.adobe.com/view-sdk/viewer.js"}]
    [:script {:src "/js/app.js" :type :module}]))
