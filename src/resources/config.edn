@@ -1,4 +1,4 @@
-{:name            "read-books"
+{:name            "record-books"
  :environment     #profile {:prod #or [#env APP_ENVIRONMENT "prod"]
                             :dev  "dev"
                             :demo "demo"
@@ -33,7 +33,7 @@
                                              :env        #ig/ref :app.ig/env}
                    :app.ig/datomic-db       {:server-type :dev-local
                                              :system      "dev"
-                                             :db-name     "read-books"
+                                             :db-name     "record-books"
                                              :env         #ig/ref :app.ig/env
                                              :storage-dir #or [#env DATOMIC_DB
                                                                #profile {:dev  #envf ["%s/datomic.data" PWD]
