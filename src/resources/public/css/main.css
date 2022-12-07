@@ -104,3 +104,31 @@ body {
        **/
       vertical-align: -.125em;
 }
+
+.start-recording {
+  transition: all .2s ease-in-out;
+}
+.start-recording:hover {
+  transform: scale(1.1);
+}
+
+.record-active {
+    min-width: 94px;
+    @apply text-red-600 font-bold;
+    border-radius: 35px;
+    background-color: rgba(0,0,0,.1);
+    margin-left: 0;
+    height: 46px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10px;
+    transition: all .2s;
+    position: relative;
+}
+
+.playback {
+    --seek-before-width: 0%;
+    --volume-before-width: 100%;
+    --buffered-width: 0%;
+}

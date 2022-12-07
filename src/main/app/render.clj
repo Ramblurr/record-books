@@ -53,6 +53,8 @@
    [:script {:src "/js/nprogress.js"}]
    [:script {:src "/js/popperjs@2-dev.js"}]
    [:script {:src "/js/tippy@6-dev.js"}]
+   [:script {:src "/js/recorder.min.js"}]
+   [:script {:src "https://documentservices.adobe.com/view-sdk/viewer.js"}]
    [:script {:src "/js/app.js" :type :module}]))
 
 (defn html5-response

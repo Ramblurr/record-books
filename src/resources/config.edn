@@ -12,14 +12,15 @@
                    :app.ig/pedestal         {:service    {:io.pedestal.http/type           :jetty
                                                           :io.pedestal.http/routes         []
                                                           :io.pedestal.http/port           #long #or [#env WEBSITES_PORT #profile {:dev 6161 :test 6162} 6160]
-                                                          :io.pedestal.http/host           #or [#env HTTP_BIND_HOST "localhost"]
+                                                          :io.pedestal.http/host           #or [#env HTTP_BIND_HOST "0.0.0.0"]
                                         ;:io.pedestal.http/resource-path "/static"
                                                           :io.pedestal.http/join?          false
                                                           :io.pedestal.http/secure-headers {:content-security-policy-settings {:img-src     "https://*.socozy.casa 'self' data:;"
                                                                                                                                :object-src  "'none';"
                                                                                                                                :default-src "'self';"
                                                                                                                                :font-src    "'self' https://rsms.me;"
-                                                                                                                               :script-src  "'self' 'unsafe-inline' 'unsafe-eval';"
+                                                                                                                               ;; :script-src  "https://documentservices.adobe.com 'self' 'unsafe-inline' 'unsafe-eval';"
+                                                                                                                               :script-src  "* data: blob: 'unsafe-inline' 'unsafe-eval'"
                                                                                                                                :style-src   "'self' 'unsafe-inline' https://rsms.me;"
                                                                                                                                :connect-src "'self'"}}}
                                              :env        #ig/ref :app.ig/env

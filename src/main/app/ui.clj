@@ -4,10 +4,11 @@
    (java.text DecimalFormat NumberFormat)
    (java.util Locale))
   (:require
-   [hiccup2.core :refer [html]]
    [app.render :as render]
+   [app.util :as util]
    [clojure.string :as str]
    [ctmx.render :as ctmx.render]
+   [hiccup2.core :refer [html]]
    [jsonista.core :as j]
    [medley.core :as m]
    [tick.core :as t]))
@@ -60,6 +61,57 @@
                                  [:link {:rel "stylesheet" :href "/css/compiled/main.css"}]]
                                 (ctmx.render/walk-attrs
                                  (unknown-error-body req)))))
+
+(def button-priority-classes {:secondary
+                              "border-transparent bg-indigo-100 px-4 py-2  text-indigo-700 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                              :white
+                              "border-gray-300 bg-white px-4 py-2 text-sm  text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-100"
+                              :white-destructive
+                              "border-red-300 bg-white px-4 py-2 text-sm  text-red-600 shadow-sm hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-100"
+                              :red
+                              "border-transparent bg-red-600 text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-gray-100"
+                              :primary
+                              "border-transparent bg-indigo-600 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100"
+                              :white-rounded "rounded-full border border-gray-300 bg-white text-gray-700 shadow-sm hover:bg-gray-50"})
+
+(def button-sizes-classes {:2xsmall "px-1.5 py-0.5 text-xs"
+                           :xsmall "px-2.5 py-1.5 text-xs"
+                           :small "px-3 py-2 text-sm leading-4"
+                           :normal "px-4 py-2 text-sm"
+                           :large "px-4 py-2 text-base"
+                           :xlarge "px-6 py-3 text-base"})
+
+(def button-icon-sizes-classes {:xsmall "h-2 w-2"
+                                :small "h-3 w-3"
+                                :normal "h-5 w-5"
+                                :large "h-5 w-5"
+                                :xlarge "h-5 w-5"})
+
+(defn button [& {:keys [tag label disabled? class attr icon priority centered? size hx-target hx-get hx-put hx-post hx-delete hx-vals form id]
+                 :or   {class ""
+                        priority :white
+                        size  :normal
+                        disabled? false
+                        tag :button}}]
+
+  [tag (merge
+        (util/remove-nils {:hx-target hx-target :hx-get hx-get :hx-post hx-post :hx-put hx-put :hx-delete hx-delete :hx-vals hx-vals :form form})
+        {:id id :class
+         (cs
+          "inline-flex items-center rounded-md border font-medium"
+          ;; "inline-flex items-center border font-medium"
+          ;; "inline-flex items-center rounded-md border"
+          (size button-sizes-classes)
+          (priority button-priority-classes)
+          (when centered? "items-center justify-center")
+          class)
+         :disabled disabled?}
+        attr)
+   (when icon (icon  {:class (cs (size button-icon-sizes-classes)  (when label "-ml-1 mr-2"))}))
+   label])
+
+(defn link-button [& opts]
+  (apply button (conj opts :a :tag)))
 
 (def hx-trigger-types
   {:hx-trigger "HX-Trigger"
